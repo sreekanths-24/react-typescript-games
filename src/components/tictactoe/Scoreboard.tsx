@@ -1,6 +1,6 @@
 
 interface BoxProps {
-  currentScore: string;
+  currentScore: number[];
   handleReset: () => void; // Adding this so you can handle clicks!
 }
 

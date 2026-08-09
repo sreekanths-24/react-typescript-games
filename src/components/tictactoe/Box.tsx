@@ -1,4 +1,3 @@
-import React from 'react'
 import Xtoken from './Xtoken'
 import Otoken from './Otoken'
 interface BoxProps {
