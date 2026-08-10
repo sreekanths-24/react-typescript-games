@@ -99,7 +99,7 @@ function Tictactoe() {
         setWinningCombinationKey(WINNING_LINE_MAP[combinationMapKey]);
         updateScore(currentPlayer);
         fireRealisticConfetti();
-        setTimeout(resetGame, 2000);
+
         return;
       }
     }
@@ -112,6 +112,14 @@ function Tictactoe() {
 
     setWinningCombinationKey(null);
   };
+  
+  useEffect(() => {
+    if (!winningCombinationKey) return;
+    const timer = setTimeout(() => {
+      resetGame();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [winningCombinationKey]);
 
   return (
     <>
