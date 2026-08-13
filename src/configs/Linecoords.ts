@@ -1,10 +1,6 @@
 // Type definition for line coordinates
-type LineCoords = {
-  x1: string;
-  y1: string;
-  x2: string;
-  y2: string;
-};
+import type { LineCoords } from "../types/tictactoe";
+
 
 // Map each winning combination to its exact line path
 const WINNING_LINE_MAP: Record<string, LineCoords> = {

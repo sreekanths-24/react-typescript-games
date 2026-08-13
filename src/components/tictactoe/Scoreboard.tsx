@@ -1,15 +1,14 @@
 import { useState } from "react";
-
+import { useTicTacToe } from "../../hooks/useTicTacToe";
 interface BoxProps {
   currentScore: number[];
   handleReset: () => void;
 }
 
 function Scoreboard({ currentScore, handleReset }: BoxProps) {
+  const { state, dispatch } = useTicTacToe();
   // 1. Define states for modal visibility, game mode, and difficulty tracking
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
-  const [gameMode, setGameMode] = useState<"single" | "multi">("multi"); // Default is multi-player
-  const [difficulty, setDifficulty] = useState<"easy" | "medium" | "hard">("medium");
 
   return (
     <div
@@ -107,11 +106,12 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
       {isSettingsOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
           <div className="bg-gray-800 border border-gray-700 w-full max-w-sm rounded-2xl p-6 shadow-2xl relative text-white">
-            
             {/* Header section */}
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-lg font-bold tracking-wide">Match Configurations</h2>
-              <button 
+              <h2 className="text-lg font-bold tracking-wide">
+                Match Configurations
+              </h2>
+              <button
                 onClick={() => setIsSettingsOpen(false)}
                 className="text-gray-400 hover:text-white text-sm bg-gray-700/40 p-1.5 rounded-full px-3 transition-all"
               >
@@ -121,23 +121,35 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
 
             {/* Game Mode Picker Row */}
             <div className="space-y-2 mb-6">
-              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Game Setup</label>
+              <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                Game Setup
+              </label>
               <div className="grid grid-cols-2 gap-2 bg-gray-900 p-1 rounded-xl">
                 <button
-                  onClick={() => setGameMode("multi")}
+                  onClick={() =>
+                    dispatch({
+                      type: "SET_GAME_MODE",
+                      payload: "multi",
+                    })
+                  }
                   className={`py-2 text-sm font-medium rounded-lg transition-all ${
-                    gameMode === "multi" 
-                      ? "bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg" 
+                    state.gameMode === "multi"
+                      ? "bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg"
                       : "text-gray-400 hover:text-white"
                   }`}
                 >
                   Multiplayer
                 </button>
                 <button
-                  onClick={() => setGameMode("single")}
+                  onClick={() =>
+                    dispatch({
+                      type: "SET_GAME_MODE",
+                      payload: "single",
+                    })
+                  }
                   className={`py-2 text-sm font-medium rounded-lg transition-all ${
-                    gameMode === "single" 
-                      ? "bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg" 
+                    state.gameMode === "single"
+                      ? "bg-gradient-to-r from-rose-500 to-rose-600 text-white shadow-lg"
                       : "text-gray-400 hover:text-white"
                   }`}
                 >
@@ -147,16 +159,23 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
             </div>
 
             {/* Difficulty Submenu - Renders conditionally if single player is checked */}
-            {gameMode === "single" && (
+            {state.gameMode === "single" && (
               <div className="space-y-2 mb-2 transition-all duration-300">
-                <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest">AI Difficulty</label>
+                <label className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                  AI Difficulty
+                </label>
                 <div className="grid grid-cols-3 gap-2 bg-gray-900 p-1 rounded-xl">
                   {(["easy", "medium", "hard"] as const).map((level) => (
                     <button
                       key={level}
-                      onClick={() => setDifficulty(level)}
+                      onClick={() =>
+                        dispatch({
+                          type: "SET_DIFFICULTY",
+                          payload: level,
+                        })
+                      }
                       className={`py-1.5 text-xs font-bold uppercase tracking-wider rounded-lg capitalize transition-all ${
-                        difficulty === level
+                        state.difficulty === level
                           ? "bg-gray-700 text-cyan-400 border border-cyan-500/30"
                           : "text-gray-500 hover:text-gray-300"
                       }`}
@@ -167,7 +186,6 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
                 </div>
               </div>
             )}
-
           </div>
         </div>
       )}
