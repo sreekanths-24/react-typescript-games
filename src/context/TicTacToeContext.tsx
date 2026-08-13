@@ -111,15 +111,15 @@ export function TicTacToeProvider({ children }: TicTacToeProviderProps) {
   useEffect(() => {
     checkForWin();
   }, [state.board]);
-useEffect(() => {
-  if (!state.winningCombinationKey) return;
+  useEffect(() => {
+    if (!state.winningCombinationKey) return;
 
-  const timer = setTimeout(() => {
-    resetGame();
-  }, 2000);
+    const timer = setTimeout(() => {
+      resetGame();
+    }, 2000);
 
-  return () => clearTimeout(timer);
-}, [state.winningCombinationKey]);
+    return () => clearTimeout(timer);
+  }, [state.winningCombinationKey]);
   return (
     <TicTacToeContext.Provider value={{ state, dispatch }}>
       {children}

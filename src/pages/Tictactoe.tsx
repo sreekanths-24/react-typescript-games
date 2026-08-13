@@ -4,13 +4,7 @@ import Singleplayer from "../components/tictactoe/Singleplayer";
 import { useTicTacToe } from "../hooks/useTicTacToe";
 
 function Tictactoe() {
-  const { state, dispatch } = useTicTacToe();
-
-  const handleReset = () => {
-    dispatch({
-      type: "RESET_SCORE",
-    });
-  };
+  const { state } = useTicTacToe();
 
   return (
     <>
@@ -19,10 +13,7 @@ function Tictactoe() {
         className="h-dvh w-full flex justify-center items-center bg-gray-900"
       >
         { state.gameMode === "multi" ? <Multiplayer /> : <Singleplayer />}
-        <Scoreboard
-          currentScore={state.currentScore}
-          handleReset={handleReset}
-        />
+        <Scoreboard />
       </div>
     </>
   );

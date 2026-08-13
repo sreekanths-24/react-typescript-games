@@ -17,6 +17,7 @@ export interface GameState {
   winningCombinationKey: LineCoords | null;
   gameMode: "single" | "multi";
   difficulty: "easy" | "medium" | "hard";
+  playerMark: "X" | "O" | null;
 }
 export type GameAction =
   | {
@@ -44,6 +45,10 @@ export type GameAction =
   | {
       type: "SET_DIFFICULTY";
       payload: "easy" | "medium" | "hard";
+    }
+  | {
+      type: "SET_PLAYER_MARK";
+      payload: "X" | "O";
     };
 
 export const initialGameState: GameState = {
@@ -53,4 +58,5 @@ export const initialGameState: GameState = {
   winningCombinationKey: null,
   gameMode: "multi",
   difficulty: "medium",
+  playerMark: null,
 };

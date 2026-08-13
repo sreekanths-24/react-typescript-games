@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { useTicTacToe } from "../../hooks/useTicTacToe";
-interface BoxProps {
-  currentScore: number[];
-  handleReset: () => void;
-}
-
-function Scoreboard({ currentScore, handleReset }: BoxProps) {
+ 
+function Scoreboard() {
   const { state, dispatch } = useTicTacToe();
   // 1. Define states for modal visibility, game mode, and difficulty tracking
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
+  const handleReset = () => {
+      dispatch({
+        type: "RESET_SCORE",
+      });
+    };
 
   return (
     <div
@@ -24,7 +25,7 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
             stroke="currentColor"
             strokeWidth="3.5"
             strokeLinecap="round"
-            className="w-4 h-4 text-rose-500"
+            className="w-4 h-4 text-cyan-500"
           >
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -34,7 +35,7 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
           </span>
         </div>
         <span className="text-xl font-black text-white mt-0.5">
-          {currentScore[0]}
+          {state.currentScore[0]}
         </span>
       </div>
 
@@ -44,7 +45,7 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
           TIES
         </span>
         <span className="text-xl font-black text-amber-400 mt-0.5">
-          {currentScore[1]}
+          {state.currentScore[1]}
         </span>
       </div>
 
@@ -65,7 +66,7 @@ function Scoreboard({ currentScore, handleReset }: BoxProps) {
           </span>
         </div>
         <span className="text-xl font-black text-white mt-0.5">
-          {currentScore[2]}
+          {state.currentScore[2]}
         </span>
       </div>
 

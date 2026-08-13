@@ -69,6 +69,7 @@ export function tictactoeReducer(
         currentPlayer: "X",
         currentScore: [0, 0, 0],
         winningCombinationKey: null,
+        playerMark: null,
       };
     }
     case "SET_GAME_MODE": {
@@ -81,6 +82,15 @@ export function tictactoeReducer(
       return {
         ...state,
         difficulty: action.payload,
+      };
+    }
+    case "SET_PLAYER_MARK": {
+      return {
+        ...state,
+        board: Array(9).fill(""),
+        currentPlayer: "X",
+        winningCombinationKey: null,
+        playerMark: action.payload,
       };
     }
 
